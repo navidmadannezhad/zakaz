@@ -1,6 +1,7 @@
 import {
     exists, 
-    lstat
+    lstat,
+    writeFile
 } from "fs/promises";
 import type { FileExportAnalyzeResult, PathEntity } from "./types";
 import { analyzeExports } from "./exportAnalyzeEngine";
@@ -74,4 +75,12 @@ export const generateExportContent = async (basePath: string, pathEntities: Path
     }
 
     return exportContent;
+}
+
+export const populateIndexFile = async (path: string, content: string) => {
+    const indexExists = await fileExists(`${path}/index.ts`);
+
+    if(!indexExists) await writeFile(`${path}/index.ts`, content, { 
+        flag: indexExists ? "a" : "w"
+    });
 }
