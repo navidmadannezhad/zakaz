@@ -23,6 +23,24 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
-  }
+    "noPropertyAccessFromIndexSignature": false,
+
+    "outDir": "./build",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "paths": { 
+      "@/*": ["src/*"]
+    },
+    "composite": true,
+    "downlevelIteration": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "bun-types"
+    ]
+
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
 }

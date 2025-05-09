@@ -60,14 +60,14 @@ export const generateExportContent = async (basePath: string, pathEntities: Path
     }
 
     for(const filePath of files){
-        const result: FileExportAnalyzeResult = analyzeExports(filePath);
-        const filePathWithoutFormat: string = filePath.split("/")?.slice(-1)[0]?.split(".")[0];
+        const result: FileExportAnalyzeResult | null = analyzeExports(filePath);
+        const filePathWithoutFormat: string | undefined = filePath.split("/")?.slice(-1)[0]?.split(".")[0];
 
-        if(result.namedExports.length){
+        if(result?.namedExports.length){
             exportContent = exportContent + `export * from "./${filePathWithoutFormat}"\n`;
         }
 
-        if(result.hasDefaultExport){
+        if(result?.hasDefaultExport){
             exportContent = exportContent + `export { default as ${result.reExports[0]} } from "./${filePathWithoutFormat}"\n`;
         }
     }

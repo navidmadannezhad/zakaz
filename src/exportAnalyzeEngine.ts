@@ -12,14 +12,14 @@ export const analyzeExports = (filePath: string): FileExportAnalyzeResult | null
             reExports: []
         } as any;
 
-        ts.forEachChild(sourceFile, node => {
+        ts.forEachChild(sourceFile as any, node => {
 
             // finds export default = ts.isExportAssignment(node) (and export = {} in commonJS)
             // finds export {} = ts.isExportDeclaration(node)
 
             if (ts.isExportAssignment(node)) {
                 result.hasDefaultExport = true;
-                result.reExports.push(node.expression?.text);
+                result.reExports.push((node.expression as any)?.text);
             } else if (ts.isExportDeclaration(node)) {
                 if (node.exportClause) {
                     if (ts.isNamedExports(node.exportClause)) {
@@ -30,7 +30,7 @@ export const analyzeExports = (filePath: string): FileExportAnalyzeResult | null
                 }
                 if (node.moduleSpecifier) {
                     result.reExports.push({
-                        source: node.moduleSpecifier.text,
+                        source: (node.moduleSpecifier as any).text,
                         specifiers: node.exportClause && ts.isNamedExports(node.exportClause)
                         ? node.exportClause.elements.map(el => ({
                             local: el.propertyName ? el.propertyName.text : el.name.text,
