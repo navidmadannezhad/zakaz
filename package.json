@@ -1,11 +1,17 @@
 {
-  "name": "zakaz",
+  "name": "zakaz-cli",
   "module": "index.ts",
+  "bin": {
+    "zakaz": "./index.ts"
+  },
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "commander": "^13.1.0"
   }
 }
