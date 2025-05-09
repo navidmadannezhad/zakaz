@@ -61,8 +61,6 @@ export const generateExportContent = async (basePath: string, pathEntities: Path
 
     for(const filePath of files){
         const result: FileExportAnalyzeResult = analyzeExports(filePath);
-        console.log(filePath)
-        console.log(filePath.split("."))
         const filePathWithoutFormat: string = filePath.split("/")?.slice(-1)[0]?.split(".")[0];
 
         if(result.namedExports.length){

@@ -4,6 +4,9 @@
   "bin": {
     "zakaz": "./index.ts"
   },
+  "scripts": {
+    "build": "bun build ./index.ts --outdir ./build"
+  },
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
