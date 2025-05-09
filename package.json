@@ -2,7 +2,7 @@
   "name": "zakaz-cli",
   "module": "index.ts",
   "bin": {
-    "zakaz": "./index.ts"
+    "zakaz": "./src/index.ts"
   },
   "scripts": {
     "build": "bun build ./index.ts --outdir ./build"
