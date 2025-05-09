@@ -9,11 +9,7 @@ import {
     populateIndexFile 
 } from "./utils";
 import type { PathEntity } from "./types";
-import { Command } from "commander";
-
-const RESTRICTED_DIRECTORIES: string[] = [
-    'api', 'assets'
-]; 
+import { Command } from "commander"; 
 
 const generateOrdersInDirectory = async (path: string, restricted_dirs: string[] = []): Promise<void> => {
     const pathEntities: PathEntity[] = await readdir(path);
@@ -22,7 +18,7 @@ const generateOrdersInDirectory = async (path: string, restricted_dirs: string[]
     await populateIndexFile(path, content);
 
     for(const folderPath of folders){
-        if(!RESTRICTED_DIRECTORIES.find(dir => path.endsWith(dir))){
+        if(!restricted_dirs.find(dir => path.endsWith(dir))){
             generateOrdersInDirectory(folderPath)
         }
     }
@@ -48,8 +44,8 @@ program
     .description('Test')
     .action(async (_options) => {
         await generateOrdersInDirectory(
-            "./test/configs",
-            ['api', 'assets']
+            "./test",
+            ['api']
         )
     });
 
