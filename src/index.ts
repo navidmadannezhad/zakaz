@@ -18,6 +18,11 @@ const generateOrdersInDirectory = async (path: string, restricted_dirs: string[]
     await populateIndexFile(path, content);
 
     for(const folderPath of folders){
+        console.log(folderPath)
+        // WIP -- COMPONENTS FOLDER STILL GETTING ZAKAZED ALTHOUGH IT'S IN RESTRICTED ROUTS
+        console.log("./test/components".endsWith("components"))
+        console.log(!restricted_dirs.find(dir => path.endsWith(dir)))
+        console.log("====")
         if(!restricted_dirs.find(dir => path.endsWith(dir))){
             generateOrdersInDirectory(folderPath)
         }
@@ -31,12 +36,21 @@ program
     .description('Simple CLI to order your named exports and default exports in an index.ts file')
     .version('1.0.0')
     .option('-r, --restricted-dirs <restricted_dirs>', 'restricted paths', "")
-    .option('-b, --entry-path <entry_path>', 'Entry Path', './')
+    .option('-b, --entry-path <entry_path>', 'Entry Path', '')
     .action(async (options) => {
-        await generateOrdersInDirectory(
-            options.entryPath,
-            options.restrictedDirs.replaceAll(' ', '').split(",")
-        )
+        try{
+            if(!options.entryPath) throw new Error("Please specify the -b entry_path");
+
+            console.log(options.restrictedDirs.replaceAll(' ', '').split(","))
+
+            await generateOrdersInDirectory(
+                options.entryPath,
+                options.restrictedDirs.replaceAll(' ', '').split(",")
+            )
+        }catch(e: any){
+            console.log("ERROR in ZAKAZ");
+            console.log(e.message)
+        }
     });
 
 program
@@ -49,4 +63,4 @@ program
         )
     });
 
-program.parse();
+program.parseAsync(process.argv).catch(console.error);
