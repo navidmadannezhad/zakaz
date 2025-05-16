@@ -1,5 +1,5 @@
 {
-  "name": "zakaz-cli",
+  "name": "zakaz",
   "module": "index.ts",
   "version": "1.0.0",
   "main": "build/index.js",
@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "bun build ./src/index.ts --outfile=build/index.js && bun run build-types",
-    "build-types": "tsc --emitDeclarationOnly --project tsconfig.types.json"
+    "build-types": "tsc --emitDeclarationOnly --project tsconfig.types.json",
+    "prepublishOnly": "npm run build"
   },
   "type": "module",
   "devDependencies": {
