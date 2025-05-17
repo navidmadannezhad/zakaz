@@ -54,13 +54,20 @@ program
     });
 
 program
-    .command('test')
+    .command('testGen')
     .description('Test')
     .action(async (_options) => {
         await generateOrdersInDirectory(
             "./test",
             ['api']
         )
+    });
+
+program
+    .command('test')
+    .description('Test')
+    .action(async (_options) => {
+        console.log("Hello from zakaz!")
     });
 
 program.parseAsync(process.argv).catch(console.error);

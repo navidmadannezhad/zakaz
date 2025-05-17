@@ -1,5 +1,5 @@
 {
-  "name": "zakaz",
+  "name": "zakaz-cli",
   "module": "index.ts",
   "version": "1.0.0",
   "main": "build/index.js",

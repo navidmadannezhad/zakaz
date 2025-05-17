@@ -13,7 +13,6 @@ export const analyzeExports = (filePath: string): FileExportAnalyzeResult | null
         } as any;
 
         ts.forEachChild(sourceFile as any, node => {
-
             // finds export default = ts.isExportAssignment(node) (and export = {} in commonJS)
             // finds export {} = ts.isExportDeclaration(node)
 
