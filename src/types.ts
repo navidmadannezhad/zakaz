@@ -5,3 +5,7 @@ export interface FileExportAnalyzeResult {
     namedExports: string[];
     reExports: string[];
 }
+
+export interface GenerateOrdersInDirectoryOptions {
+    log?: boolean;
+}

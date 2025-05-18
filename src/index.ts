@@ -8,23 +8,22 @@ import {
     getFolderEntitiesFromPathEntities, 
     populateIndexFile 
 } from "./utils";
-import type { PathEntity } from "./types";
+import type { GenerateOrdersInDirectoryOptions, PathEntity } from "./types";
 import { Command } from "commander"; 
 
-const generateOrdersInDirectory = async (path: string, restricted_dirs: string[] = []): Promise<void> => {
+const generateOrdersInDirectory = async (path: string, restricted_dirs: string[] = [], options: GenerateOrdersInDirectoryOptions = {}): Promise<void> => {
+    const { log } = options;
+
     const pathEntities: PathEntity[] = await readdir(path);
     const folders = await getFolderEntitiesFromPathEntities(path, pathEntities);
     const content = await generateExportContent(path, pathEntities);
     await populateIndexFile(path, content);
 
     for(const folderPath of folders){
-        console.log(folderPath)
-        // WIP -- COMPONENTS FOLDER STILL GETTING ZAKAZED ALTHOUGH IT'S IN RESTRICTED ROUTS
-        console.log("./test/components".endsWith("components"))
-        console.log(!restricted_dirs.find(dir => path.endsWith(dir)))
-        console.log("====")
-        if(!restricted_dirs.find(dir => path.endsWith(dir))){
-            generateOrdersInDirectory(folderPath)
+        if(!restricted_dirs.find(dir => folderPath.endsWith(dir))){
+            if(log) console.log("Processing: ", folderPath);
+            await generateOrdersInDirectory(folderPath, restricted_dirs, options)
+            if(log) console.log("Completed: ", folderPath);
         }
     }
 }
@@ -35,20 +34,20 @@ program
     .name('zakaz')
     .description('Simple CLI to order your named exports and default exports in an index.ts file')
     .version('1.0.0')
-    .option('-r, --restricted-dirs <restricted_dirs>', 'restricted paths', "")
+    .option('-d, --restricted-dirs <restricted_dirs>', 'restricted paths, seperated by comma', "")
     .option('-b, --entry-path <entry_path>', 'Entry Path', '')
+    .option('-l, --log', "Should we have the process log? or that's just too much?")
     .action(async (options) => {
         try{
             if(!options.entryPath) throw new Error("Please specify the -b entry_path");
 
-            console.log(options.restrictedDirs.replaceAll(' ', '').split(","))
-
             await generateOrdersInDirectory(
                 options.entryPath,
-                options.restrictedDirs.replaceAll(' ', '').split(",")
+                options.restrictedDirs.replaceAll(' ', '').split(","),
+                { log: options.log }
             )
         }catch(e: any){
-            console.log("ERROR in ZAKAZ");
+            console.error("ERROR in ZAKAZ !!");
             console.log(e.message)
         }
     });
