@@ -1,12 +1,20 @@
 import {
-    exists, 
     lstat,
     writeFile
 } from "fs/promises";
 import type { FileExportAnalyzeResult, PathEntity } from "./types";
 import { analyzeExports } from "./exportAnalyzeEngine";
 
-export const fileExists = async (path: string): Promise<boolean> => await exists(path);
+export const fileExists = async (path: string): Promise<boolean> => {
+    let exists;
+    try{
+        await lstat(path);
+        exists = true;
+    }catch{
+        exists = false;
+    }
+    return exists;
+};
 
 export const isDirectory = async (path: string): Promise<boolean> => {
     let isDirectory: boolean = false;
