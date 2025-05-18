@@ -9,7 +9,7 @@
     "zakaz": "./bin/index.js"
   },
   "scripts": {
-    "build": "bun build ./src/index.ts --outfile=build/index.js && bun run build-types",
+    "build": "bun build ./src/index.ts --outfile=build/index.js --target=node && bun run build-types",
     "build-types": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "prepublishOnly": "npm run build"
   },
