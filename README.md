@@ -17,8 +17,6 @@ Alright, This package generates some imports and exports for you, making it easi
 
 
 ## Usage/Examples
-
-```bash
 npx zakaz <...options>
 
 -b <required>: Base path that zakaz starts the ZAKAZing process! It scans all the folders and subfolders to generate the needed index.ts file.
@@ -28,12 +26,14 @@ npx zakaz <...options>
 -l <optional>: wheather you want to see the process log or nah.
 
 EXAMPLE:
+```bash
 npx zakaz -b ./src -d "generated_api, generated_models" -l
+```
 MEANS:
 Scan all folders and subfolders in src, avoid scanning any folder named generated_api and generated_models
-```
+
 
 
 ## Contributing
 
-This package is in its initial phase, so surely there are many bugs, issues and improvements waiting for you contributions! Feel free to fork and PR.
+This package is in its initial phase, so surely there are many bugs, issues and improvements waiting for your contributions! Feel free to fork and PR.
